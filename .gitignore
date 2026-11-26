@@ -49,3 +49,6 @@ app.*.map.json
 
 # Clave de Gemini
 .env
+
+# Kotlin
+/android/.kotlin/
