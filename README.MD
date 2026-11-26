@@ -2,6 +2,12 @@
 
 > **Equipo:** UMIZOOMI | **Campus:** Mérida UVM | **Integrantes:** Emiliano Perez, Rodrigo Ferrer, Alan Jimenez, Jonathan Alvarez
 
+## 📱 App demostrable
+
+**[Descargar Abuelo Guía para Android (APK)](https://github.com/EmilianoPerezz/Abuelo-Guia/releases/latest/download/AbueloGuia.apk)** · [Ver todas las versiones](https://github.com/EmilianoPerezz/Abuelo-Guia/releases)
+
+Requiere Android 7 o superior y conexión a internet. Las instrucciones de instalación están en el [Manual de usuario](#5-manual-de-usuario).
+
 ---
 
 ## 1. Resumen ejecutivo
@@ -25,6 +31,12 @@ Una aplicación móvil apoyada en un asistente de voz donde el usuario captura u
 ### Público objetivo
 Adultos mayores con dificultades para entender trámites o usar aplicaciones con mucho texto.
 
+### Qué la hace diferente
+- **No hay que leer la convocatoria:** el usuario solo toma una foto y la app le dice qué documento es y si sirve.
+- **Lista personal que se va marcando:** cada foto válida marca un requisito, así la persona sabe en todo momento cuánto le falta.
+- **Pensada para voz:** todo se lee en voz alta y las preguntas se hacen hablando; escribir es opcional.
+- **Respuestas acotadas al trámite real:** Gemini solo usa la lista oficial incluida en la app, en lugar de responder como un chat genérico.
+
 ### Boceto / diseño
 | Inicio | Tomar foto | Qué falta | Preguntar |
 |:---:|:---:|:---:|:---:|
@@ -44,6 +56,8 @@ Funciones del MVP (trámite: Pensión para el Bienestar de las Personas Adultas 
 - **Asistente de voz:** el usuario toca el micrófono, hace su pregunta y escucha la respuesta. Gemini conoce qué documentos ya tiene y cuáles le faltan. También hay preguntas sugeridas y la opción "Prefiero escribir".
 
 La aplicación orienta, pero no valida documentos oficialmente.
+
+Fuente de los requisitos: convocatoria oficial de Programas para el Bienestar (gob.mx/bienestar).
 
 ---
 
@@ -101,9 +115,10 @@ En Android Studio agregue `--dart-define-from-file=.env` en *Run > Edit Configur
 Esta guía está pensada para personas que usan la aplicación por primera vez.
 
 ### Instalación o acceso
-1. Instale Abuelo Guía en su teléfono Android. [PENDIENTE: enlace a la app demostrable]
-2. Cuando la aplicación lo pida, permita el uso de la cámara y del micrófono.
-3. Necesita conexión a internet.
+1. Desde su teléfono Android, toque [Descargar Abuelo Guía](https://github.com/EmilianoPerezz/Abuelo-Guia/releases/latest/download/AbueloGuia.apk).
+2. Abra el archivo descargado. Si el teléfono lo pide, permita **instalar apps desconocidas**. Si aparece Play Protect, toque **Más detalles → Instalar de todas formas** (aparece porque la app no viene de la Play Store).
+3. Cuando la aplicación lo pida, permita el uso de la cámara y del micrófono.
+4. Necesita conexión a internet.
 
 ### Primeros pasos y uso diario
 1. Abra la aplicación.
@@ -127,3 +142,10 @@ Esta guía está pensada para personas que usan la aplicación por primera vez.
 
 ### Impacto esperado
 Facilitar que los adultos mayores comprendan y avancen en trámites esenciales como su pensión con mayor autonomía, reduciendo trámites incompletos, dependencia de terceros y traslados innecesarios en la comunidad.
+
+### Privacidad y límites
+- Las fotos solo se envían a Gemini para revisarlas; la app no las guarda ni tiene base de datos.
+- Se le indica a Gemini que no repita datos personales como números de CURP o direcciones.
+- La app orienta, pero no sustituye la revisión oficial: siempre recomienda confirmar en el Módulo de Bienestar.
+- Los teléfonos de contacto no se pueden revisar con foto; la app los muestra como recordatorio.
+- Para demostraciones se recomienda usar documentos ficticios o con los datos tapados.
