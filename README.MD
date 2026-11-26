@@ -19,8 +19,8 @@ La información sobre trámites suele ser confusa, estar dispersa y emplear leng
 Una aplicación móvil apoyada en un asistente de voz donde el usuario captura una fotografía de su documento y recibe una explicación clara y sencilla sobre qué falta y cuál es el siguiente paso a seguir.
 
 ### Alineación con los Objetivos de Desarrollo Sostenible (ODS)
-* **ODS 10 (Reducción de las desigualdades):** Facilita el acceso a trámites y derechos a quienes enfrentan barreras de lectura o tecnología.
-* **ODS 11 (Ciudades y comunidades sostenibles):** Favorece comunidades más inclusivas, con servicios más accesibles para las personas mayores, y puede evitar traslados innecesarios.
+- **ODS 10 (Reducción de las desigualdades):** Facilita el acceso a trámites y derechos a quienes enfrentan barreras de lectura o tecnología.
+- **ODS 11 (Ciudades y comunidades sostenibles):** Favorece comunidades más inclusivas, con servicios más accesibles para las personas mayores, y puede evitar traslados innecesarios.
 
 ### Público objetivo
 Adultos mayores con dificultades para entender trámites o usar aplicaciones con mucho texto.
@@ -38,10 +38,10 @@ Adultos mayores con dificultades para entender trámites o usar aplicaciones con
 
 Funciones planeadas para el MVP:
 
-* **Foto del documento:** el usuario toma una foto desde la aplicación y la envía a analizar.
-* **Revisión de requisitos:** compara el documento con la lista de requisitos del trámite e indica lo que ya tiene y lo que falta.
-* **Explicación en lenguaje sencillo:** muestra el siguiente paso con frases cortas y letra grande.
-* **Asistente de voz:** el usuario toca un botón, hace su pregunta y puede escuchar la respuesta.
+- **Foto del documento:** el usuario toma una foto desde la aplicación y la envía a analizar.
+- **Revisión de requisitos:** compara el documento con la lista de requisitos del trámite e indica lo que ya tiene y lo que falta.
+- **Explicación en lenguaje sencillo:** muestra el siguiente paso con frases cortas y letra grande.
+- **Asistente de voz:** el usuario toca un botón, hace su pregunta y puede escuchar la respuesta.
 
 La aplicación orienta, pero no valida documentos oficialmente.
 
@@ -56,11 +56,11 @@ La aplicación orienta, pero no valida documentos oficialmente.
 4. La app la muestra en pantalla y la lee en voz alta.
 
 ### Stack tecnológico (planeado)
-* **Aplicación móvil:** Flutter (Dart), desarrollada en Android Studio.
-* **Cámara:** paquete `image_picker`.
-* **Voz:** paquetes `speech_to_text` (escuchar) y `flutter_tts` (leer en voz alta).
-* **Datos:** lista de requisitos incluida en la app, sin base de datos propia.
-* **Inteligencia Artificial:** Google Gemini mediante Firebase AI Logic (`firebase_core` y `firebase_ai`). Modelo: [PENDIENTE]
+- **Aplicación móvil:** Flutter (Dart), desarrollada en Android Studio.
+- **Cámara:** paquete `image_picker`.
+- **Voz:** paquetes `speech_to_text` (escuchar) y `flutter_tts` (leer en voz alta).
+- **Datos:** lista de requisitos incluida en la app, sin base de datos propia.
+- **Inteligencia Artificial:** Google Gemini mediante Firebase AI Logic (`firebase_core` y `firebase_ai`). Modelo: [PENDIENTE]
 
 ### Integración de Gemini
 Gemini interpreta la foto del documento, la compara con la lista de requisitos, explica qué falta y cuál es el siguiente paso, y responde las preguntas del usuario. La voz se convierte a texto en el celular antes de enviarse. La app no guardará las fotos en una base de datos propia.
@@ -89,10 +89,10 @@ Esta guía está pensada para personas que usan la aplicación por primera vez. 
 ## 6. Accesibilidad e impacto
 
 ### Características de accesibilidad e inclusión
-* Apoyo mediante asistente de voz para reducir la carga de lectura.
-* Explicaciones en lenguaje sencillo orientadas a usuarios con dificultades para entender trámites o usar aplicaciones con mucho texto.
-* Diseño con letra grande, botones grandes y alto contraste.
-* Pocas opciones por pantalla.
+- Apoyo mediante asistente de voz para reducir la carga de lectura.
+- Explicaciones en lenguaje sencillo orientadas a usuarios con dificultades para entender trámites o usar aplicaciones con mucho texto.
+- Diseño con letra grande, botones grandes y alto contraste.
+- Pocas opciones por pantalla.
 
 ### Impacto esperado
 Facilitar que los adultos mayores comprendan y avancen en trámites esenciales como su pensión con mayor autonomía, reduciendo trámites incompletos, dependencia de terceros y traslados innecesarios en la comunidad.
