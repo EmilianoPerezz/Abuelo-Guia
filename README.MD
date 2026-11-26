@@ -26,7 +26,7 @@ Una aplicación móvil apoyada en un asistente de voz donde el usuario captura u
 Adultos mayores con dificultades para entender trámites o usar aplicaciones con mucho texto.
 
 ### Boceto / diseño
-![Boceto de Abuelo Guía](boceto/boceto.png): Inicio, Tomar foto, Qué falta y Preguntar con voz. Los resultados que muestra son de ejemplo.
+![Boceto de Abuelo Guía](boceto/Boceto.pdf): Inicio, Tomar foto, Qué falta y Preguntar con voz. Los resultados que muestra son de ejemplo.
 
 ---
 
