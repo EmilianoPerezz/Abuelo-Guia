@@ -1,11 +1,11 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class AppColors {
-  static const Color texto = Color(0xFF1A1A1A);
-  static const Color fondo = Color(0xFFFFFDF7);
-  static const Color primario = Color(0xFF0B5394);
-  static const Color sobrePrimario = Color(0xFFFFFFFF);
-  static const Color error = Color(0xFFB00020);
-  static const Color exito = Color(0xFF1B6E2E);
-  static const Color borde = Color(0xFF1A1A1A);
+  static const Color texto = Color.fromARGB(255, 0, 0, 0);
+  static const Color fondo = Color.fromARGB(255, 239, 232, 221);
+  static const Color primario = Color.fromARGB(255, 118, 171, 174);
+  static const Color sobrePrimario = Color.fromARGB(255, 255, 255, 255);
+  static const Color error = Color.fromRGBO(176, 0, 32, 1);
+  static const Color exito = Color.fromRGBO(27, 110, 46, 1);
+  static const Color borde = Color.fromARGB(255, 26, 48, 56);
 }

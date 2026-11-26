@@ -36,12 +36,12 @@ Adultos mayores con dificultades para entender trámites o usar aplicaciones con
 
 ## 3. Documentación funcional
 
-Funciones planeadas para el MVP:
+Funciones del MVP (trámite: Pensión para el Bienestar de las Personas Adultas Mayores):
 
-- **Foto del documento:** el usuario toma una foto desde la aplicación y la envía a analizar.
-- **Revisión de requisitos:** compara el documento con la lista de requisitos del trámite e indica lo que ya tiene y lo que falta.
-- **Explicación en lenguaje sencillo:** muestra el siguiente paso con frases cortas y letra grande.
-- **Asistente de voz:** el usuario toca un botón, hace su pregunta y puede escuchar la respuesta.
+- **Foto del documento:** el usuario toma una foto con la cámara o elige una foto guardada. Gemini identifica qué documento es y si sirve (vigente, legible y, en el comprobante de domicilio, de máximo 6 meses).
+- **Lista que se va marcando:** cada foto válida marca un requisito como "Ya lo tiene". La lista oficial incluida en la app es: identificación oficial vigente, CURP, acta de nacimiento y comprobante de domicilio (máximo 6 meses). Además recuerda llevar los teléfonos de contacto.
+- **Explicación en lenguaje sencillo:** muestra el siguiente paso con frases cortas y letra grande, y lo lee en voz alta automáticamente.
+- **Asistente de voz:** el usuario toca el micrófono, hace su pregunta y escucha la respuesta. Gemini conoce qué documentos ya tiene y cuáles le faltan. También hay preguntas sugeridas y la opción "Prefiero escribir".
 
 La aplicación orienta, pero no valida documentos oficialmente.
 
@@ -49,27 +49,56 @@ La aplicación orienta, pero no valida documentos oficialmente.
 
 ## 4. Documentación técnica
 
-### Arquitectura general (planeada)
+### Arquitectura general
 1. La app captura la foto o la pregunta por voz.
 2. La app envía a Gemini la imagen o el texto, junto con la lista de requisitos incluida en la app.
 3. Gemini devuelve una explicación sencilla.
 4. La app la muestra en pantalla y la lee en voz alta.
 
-### Stack tecnológico (planeado)
+### Stack tecnológico
 - **Aplicación móvil:** Flutter (Dart), desarrollada en Android Studio.
 - **Cámara:** paquete `image_picker`.
 - **Voz:** paquetes `speech_to_text` (escuchar) y `flutter_tts` (leer en voz alta).
 - **Datos:** lista de requisitos incluida en la app, sin base de datos propia.
-- **Inteligencia Artificial:** Google Gemini mediante Firebase AI Logic (`firebase_core` y `firebase_ai`). Modelo: [PENDIENTE]
+- **Conexión:** paquete `http`.
+- **Inteligencia Artificial:** Google Gemini API (REST `generateContent`). Modelo: `gemini-3.5-flash-lite` (si está saturado, la app reintenta con `gemini-3.8-flash`).
 
 ### Integración de Gemini
-Gemini interpreta la foto del documento, la compara con la lista de requisitos, explica qué falta y cuál es el siguiente paso, y responde las preguntas del usuario. La voz se convierte a texto en el celular antes de enviarse. La app no guardará las fotos en una base de datos propia.
+Gemini interpreta la foto del documento, la compara con la lista de requisitos, explica qué falta y cuál es el siguiente paso, y responde las preguntas del usuario. La voz se convierte a texto en el celular antes de enviarse. Para las fotos, Gemini responde en JSON (`requisito`, `documento`, `sirve`, `explicacion`, `siguiente_paso`) y la app marca la lista con esa respuesta. Las fotos solo se envían a Gemini para revisarlas; la app no las guarda.
+
+### Estructura del código
+```
+lib/
+├── main.dart                 Arranque de la app y tema
+├── data/requisitos.dart      Lista oficial de requisitos del trámite
+├── services/
+│   ├── gemini_service.dart   Llamadas a Gemini (revisar foto y responder preguntas)
+│   ├── tramite.dart          Estado en memoria: lista marcada y conversación
+│   └── voz_service.dart      Voz a texto y lectura en voz alta
+├── screens/                  Inicio, Tomar foto, Resultado y Preguntar
+├── theme/                    Colores y tamaños de letra
+└── widgets/                  Botones, tarjetas y botón de voz reutilizables
+test/widget_test.dart         Pruebas de la pantalla de inicio y de la lista
+```
+
+### Cómo ejecutar el proyecto (desarrolladores)
+1. Instale Flutter y Android Studio. En Windows active el **Modo de desarrollador** (lo pide Flutter para los plugins).
+2. Cree una clave de Gemini en Google AI Studio.
+3. Copie `.env.example` como `.env` y pegue su clave. `.env` está en `.gitignore` y no se sube a GitHub.
+4. Ejecute:
+```
+flutter pub get
+flutter run --dart-define-from-file=.env
+```
+5. Para generar el APK: `flutter build apk --release --dart-define-from-file=.env`
+
+En Android Studio agregue `--dart-define-from-file=.env` en *Run > Edit Configurations > Additional run args*.
 
 ---
 
 ## 5. Manual de usuario
 
-Esta guía está pensada para personas que usan la aplicación por primera vez. Describe el funcionamiento planeado.
+Esta guía está pensada para personas que usan la aplicación por primera vez.
 
 ### Instalación o acceso
 1. Instale Abuelo Guía en su teléfono Android. [PENDIENTE: enlace a la app demostrable]
@@ -80,9 +109,11 @@ Esta guía está pensada para personas que usan la aplicación por primera vez. 
 1. Abra la aplicación.
 2. Toque **Tomar foto de mi documento** y ponga la hoja sobre una mesa, con buena luz.
 3. Lea qué documentos ya tiene, cuál le falta y qué hacer después.
-4. Si tiene una duda, toque **Tengo una pregunta** y hable.
-5. Toque **Escuchar respuesta** para oírla.
-6. Confirme los requisitos en la oficina oficial.
+4. La app le lee el resultado en voz alta. Toque **Escuchar** para oírlo otra vez.
+5. Toque **Tomar foto de otro documento** para seguir completando su lista.
+6. Si tiene una duda, toque **Tengo una pregunta** o **Hablar con el asistente**, toque el micrófono y hable.
+7. Toque **Escuchar respuesta** para oírla otra vez.
+8. Confirme los requisitos en su Módulo de Bienestar.
 
 ---
 
