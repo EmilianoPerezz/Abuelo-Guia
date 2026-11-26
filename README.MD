@@ -1,6 +1,6 @@
 # Abuelo Guía
 
-> **Equipo:** UMIZOOMI | **Campus:** Mérida UVM
+> **Equipo:** UMIZOOMI | **Campus:** Mérida UVM | **Integrantes:** Emiliano Perez, Rodrigo Ferrer, Alan Jimenez, Jonathan Alvarez
 
 ---
 
