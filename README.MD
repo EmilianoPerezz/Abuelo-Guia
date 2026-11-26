@@ -25,44 +25,60 @@ Una aplicación móvil apoyada en un asistente de voz donde el usuario captura u
 ### Público objetivo
 Adultos mayores con dificultades para entender trámites o usar aplicaciones con mucho texto.
 
+### Boceto / diseño
+![Boceto de Abuelo Guía](boceto/boceto.png): Inicio, Tomar foto, Qué falta y Preguntar con voz. Los resultados que muestra son de ejemplo.
+
 ---
 
 ## 3. Documentación funcional
 
-* **Revisión de documentos por fotografía y explicación guiada:** [PENDIENTE — Detalla el flujo completo de captura, análisis y guía de pasos.]
-* **Asistente de voz:** [PENDIENTE — Especifica cómo interactúa el usuario por voz con la aplicación.]
-* **[PENDIENTE — Nombre de la función 3]:** [PENDIENTE — Descripción breve.]
-* **[PENDIENTE — Nombre de la función 4]:** [PENDIENTE — Descripción breve.]
+Funciones planeadas para el MVP:
+
+* **Foto del documento:** el usuario toma una foto desde la aplicación y la envía a analizar.
+* **Revisión de requisitos:** compara el documento con la lista de requisitos del trámite e indica lo que ya tiene y lo que falta.
+* **Explicación en lenguaje sencillo:** muestra el siguiente paso con frases cortas y letra grande.
+* **Asistente de voz:** el usuario toca un botón, hace su pregunta y puede escuchar la respuesta.
+
+La aplicación orienta, pero no valida documentos oficialmente.
 
 ---
 
 ## 4. Documentación técnica
 
-### Arquitectura general
-[PENDIENTE — Describe la arquitectura general del sistema y el flujo principal de datos.]
+### Arquitectura general (planeada)
+1. La app captura la foto o la pregunta por voz.
+2. La app envía a Gemini la imagen o el texto, junto con la lista de requisitos incluida en la app.
+3. Gemini devuelve una explicación sencilla.
+4. La app la muestra en pantalla y la lee en voz alta.
 
-### Stack tecnológico
-* **Aplicación móvil:** [PENDIENTE — Tecnologías usadas, por ejemplo Flutter, Android, etc.]
-* **Backend / Servicios / Base de datos:** [PENDIENTE]
-* **Inteligencia Artificial:** Google Gemini ([PENDIENTE — Modelo, SDK o servicio utilizado])
+### Stack tecnológico (planeado)
+* **Aplicación móvil:** Flutter (Dart), desarrollada en Android Studio.
+* **Cámara:** paquete `image_picker`.
+* **Voz:** paquetes `speech_to_text` (escuchar) y `flutter_tts` (leer en voz alta).
+* **Datos:** lista de requisitos incluida en la app, sin base de datos propia.
+* **Inteligencia Artificial:** Google Gemini mediante Firebase AI Logic (`firebase_core` y `firebase_ai`). Modelo: [PENDIENTE]
 
 ### Integración de Gemini
-La propuesta contempla el uso de Gemini para interpretar el documento fotografiado por el usuario y ayudar a explicar en lenguaje sencillo qué falta y cuál es el siguiente paso. [PENDIENTE — Especifica el flujo técnico exacto, modelo/API empleada y cómo se conecta con el asistente de voz.]
+Gemini interpreta la foto del documento, la compara con la lista de requisitos, explica qué falta y cuál es el siguiente paso, y responde las preguntas del usuario. La voz se convierte a texto en el celular antes de enviarse. La app no guardará las fotos en una base de datos propia.
 
 ---
 
 ## 5. Manual de usuario
 
-Esta guía está pensada para personas que usan la aplicación por primera vez.
+Esta guía está pensada para personas que usan la aplicación por primera vez. Describe el funcionamiento planeado.
 
 ### Instalación o acceso
-1. [PENDIENTE — Indica cómo instalar Abuelo Guía en el teléfono o abrir la versión de prueba.]
-2. [PENDIENTE — Indica si se requiere registro, inicio de sesión o conceder permisos de cámara y micrófono.]
+1. Instale Abuelo Guía en su teléfono Android. [PENDIENTE: enlace a la app demostrable]
+2. Cuando la aplicación lo pida, permita el uso de la cámara y del micrófono.
+3. Necesita conexión a internet.
 
 ### Primeros pasos y uso diario
-1. Entra a la aplicación y selecciona el trámite que deseas realizar (por ejemplo, el de tu pensión), o usa el asistente de voz para comenzar.
-2. Toma una foto clara de tu documento cuando la aplicación lo solicite.
-3. Escucha o lee la explicación en lenguaje sencillo para saber qué falta y cuál es el siguiente paso. [PENDIENTE — Completa con detalles de repetición de audio, guardado o cierre del flujo.]
+1. Abra la aplicación.
+2. Toque **Tomar foto de mi documento** y ponga la hoja sobre una mesa, con buena luz.
+3. Lea qué documentos ya tiene, cuál le falta y qué hacer después.
+4. Si tiene una duda, toque **Tengo una pregunta** y hable.
+5. Toque **Escuchar respuesta** para oírla.
+6. Confirme los requisitos en la oficina oficial.
 
 ---
 
@@ -71,7 +87,8 @@ Esta guía está pensada para personas que usan la aplicación por primera vez.
 ### Características de accesibilidad e inclusión
 * Apoyo mediante asistente de voz para reducir la carga de lectura.
 * Explicaciones en lenguaje sencillo orientadas a usuarios con dificultades para entender trámites o usar aplicaciones con mucho texto.
-* [PENDIENTE — Añade ajustes visuales, de audio o de navegación implementados, como tamaño de fuente o botones grandes.]
+* Diseño con letra grande, botones grandes y alto contraste.
+* Pocas opciones por pantalla.
 
 ### Impacto esperado
 Facilitar que los adultos mayores comprendan y avancen en trámites esenciales como su pensión con mayor autonomía, reduciendo trámites incompletos, dependencia de terceros y traslados innecesarios en la comunidad.
