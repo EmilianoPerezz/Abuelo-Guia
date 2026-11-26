@@ -1,3 +1,4 @@
+
 import 'dart:typed_data';
 
 import 'package:material_ui/material_ui.dart';
@@ -11,6 +12,7 @@ import '../widgets/big_button.dart';
 import '../widgets/cargando.dart';
 import '../widgets/info_card.dart';
 import '../widgets/secondary_button.dart';
+import '../backend/utils/error_handler.dart';
 import 'resultado_screen.dart';
 
 class FotoScreen extends StatefulWidget {
@@ -28,7 +30,9 @@ class _FotoScreenState extends State<FotoScreen> {
 
   Future<void> _tomar(ImageSource origen) async {
     setState(() => _error = null);
+
     XFile? archivo;
+
     try {
       archivo = await _picker.pickImage(
         source: origen,
@@ -36,31 +40,48 @@ class _FotoScreenState extends State<FotoScreen> {
         imageQuality: 75,
       );
     } catch (_) {
-      setState(() => _error = 'No pude abrir la cámara. Revise que la app tenga permiso.');
+      setState(() {
+        _error = 'No pude abrir la cámara. Revise que la app tenga permiso.';
+      });
       return;
     }
+
     if (archivo == null) return;
 
     final bytes = await archivo.readAsBytes();
-    final tipo = archivo.name.toLowerCase().endsWith('.png') ? 'image/png' : 'image/jpeg';
+    final tipo = archivo.name.toLowerCase().endsWith('.png')
+        ? 'image/png'
+        : 'image/jpeg';
+
     setState(() {
       _foto = bytes;
       _revisando = true;
     });
-    VozService.hablar('Estoy revisando su documento. Espere un momento, por favor.');
+
+    VozService.hablar(
+      'Estoy revisando su documento. Espere un momento, por favor.',
+    );
 
     try {
       final revision = await GeminiService.revisarDocumento(bytes, tipo);
+
       tramite.guardarRevision(revision);
+
       if (!mounted) return;
+
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (_) => const ResultadoScreen(recienRevisado: true)),
+        MaterialPageRoute(
+          builder: (_) => const ResultadoScreen(recienRevisado: true),
+        ),
       );
     } catch (e) {
-      final mensaje = e is GeminiError ? e.mensaje : 'Algo salió mal. Intente otra vez.';
+      final mensaje = ErrorHandler.getUserMessage(e);
+
       VozService.hablar(mensaje);
+
       if (!mounted) return;
+
       setState(() {
         _revisando = false;
         _error = mensaje;
@@ -85,17 +106,31 @@ class _FotoScreenState extends State<FotoScreen> {
                   Navigator.pop(context);
                 },
               ),
+
               const SizedBox(height: 24),
-              Text('Tome una foto de su documento',
-                  style: Theme.of(context).textTheme.headlineMedium),
+
+              Text(
+                'Tome una foto de su documento',
+                style: Theme.of(context).textTheme.headlineMedium,
+              ),
+
               const SizedBox(height: 12),
-              Text('Ponga la hoja sobre una mesa, con buena luz.',
-                  style: Theme.of(context).textTheme.bodyLarge),
+
+              Text(
+                'Ponga la hoja sobre una mesa, con buena luz.',
+                style: Theme.of(context).textTheme.bodyLarge,
+              ),
+
               const SizedBox(height: 20),
+
               _MarcoFoto(foto: _foto),
+
               const SizedBox(height: 20),
+
               if (_revisando)
-                const Cargando(texto: 'Estoy revisando su documento...')
+                const Cargando(
+                  texto: 'Estoy revisando su documento...',
+                )
               else ...[
                 if (_error != null) ...[
                   InfoCard(
@@ -105,14 +140,18 @@ class _FotoScreenState extends State<FotoScreen> {
                     borde: AppColors.error,
                     icono: Icons.info_outline,
                   ),
+
                   const SizedBox(height: 20),
                 ],
+
                 BigButton(
                   texto: 'Tomar foto',
                   icono: Icons.camera_alt,
                   onPressed: () => _tomar(ImageSource.camera),
                 ),
+
                 const SizedBox(height: 16),
+
                 SecondaryButton(
                   texto: 'Usar una foto guardada',
                   icono: Icons.photo_library,
@@ -144,17 +183,27 @@ class _MarcoFoto extends StatelessWidget {
             ? const Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(Icons.description_outlined, size: 72, color: AppColors.primario),
+                  Icon(
+                    Icons.description_outlined,
+                    size: 72,
+                    color: AppColors.primario,
+                  ),
                   SizedBox(height: 12),
                   Text(
                     'Aquí aparecerá su foto',
-                    style: TextStyle(fontSize: 22, color: AppColors.texto),
+                    style: TextStyle(
+                      fontSize: 22,
+                      color: AppColors.texto,
+                    ),
                   ),
                 ],
               )
             : ClipRRect(
                 borderRadius: BorderRadius.circular(12),
-                child: Image.memory(foto!, fit: BoxFit.contain),
+                child: Image.memory(
+                  foto!,
+                  fit: BoxFit.contain,
+                ),
               ),
       ),
     );
@@ -168,12 +217,23 @@ class _BordePunteado extends CustomPainter {
       ..color = AppColors.primario
       ..strokeWidth = 3
       ..style = PaintingStyle.stroke;
+
     final ruta = Path()
-      ..addRRect(RRect.fromRectAndRadius(Offset.zero & size, const Radius.circular(18)));
+      ..addRRect(
+        RRect.fromRectAndRadius(
+          Offset.zero & size,
+          const Radius.circular(18),
+        ),
+      );
+
     for (final metrica in ruta.computeMetrics()) {
       double d = 0;
+
       while (d < metrica.length) {
-        canvas.drawPath(metrica.extractPath(d, d + 12), pincel);
+        canvas.drawPath(
+          metrica.extractPath(d, d + 12),
+          pincel,
+        );
         d += 20;
       }
     }
