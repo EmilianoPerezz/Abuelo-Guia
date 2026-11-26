@@ -13,15 +13,26 @@ Revision revision(String requisito, bool sirve) => Revision(
     );
 
 void main() {
-  testWidgets('La pantalla de inicio muestra los tres trámites y las opciones', (tester) async {
+  testWidgets('La pantalla de inicio muestra los tres trámites', (tester) async {
     await tester.pumpWidget(const AbueloGuiaApp());
 
     expect(find.text('Hola, soy Abuelo Guía'), findsOneWidget);
     expect(find.text('Pensión para adultos mayores'), findsOneWidget);
     expect(find.text('Credencial INAPAM'), findsOneWidget);
     expect(find.text('Pensión Mujeres Bienestar'), findsOneWidget);
+  });
+
+  testWidgets('Al elegir un trámite se ven arriba el trámite y sus documentos', (tester) async {
+    await tester.pumpWidget(const AbueloGuiaApp());
+    await tester.tap(find.text('Credencial INAPAM'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Usted eligió'), findsOneWidget);
+    expect(find.text('Credencial INAPAM'), findsOneWidget);
+    expect(find.text('Documentos que necesita'), findsOneWidget);
+    expect(find.textContaining('Fotografía reciente'), findsOneWidget);
+    expect(find.textContaining('Acta de nacimiento'), findsOneWidget);
     expect(find.text('Tomar foto de mi documento'), findsOneWidget);
-    expect(find.text('Hablar con el asistente'), findsOneWidget);
   });
 
   test('Un documento que sirve se marca en la lista', () {

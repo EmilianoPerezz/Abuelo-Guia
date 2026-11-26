@@ -153,9 +153,9 @@ class _PreguntarScreenState extends State<PreguntarScreen> {
                 padding: const EdgeInsets.all(24),
                 children: [
                   SecondaryButton(
-                    texto: 'Volver al inicio',
-                    icono: Icons.home,
-                    onPressed: () => Navigator.popUntil(context, (r) => r.isFirst),
+                    texto: 'Volver a mis documentos',
+                    icono: Icons.checklist,
+                    onPressed: () => Navigator.popUntil(context, (r) => r.settings.name == 'tramite' || r.isFirst),
                   ),
                   const SizedBox(height: 24),
                   Text('¿Qué quiere saber?',

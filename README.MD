@@ -58,7 +58,7 @@ Trámites incluidos (versión 1.1):
 
 Funciones:
 
-- **Elegir el trámite:** en la pantalla de inicio la persona toca uno de los tres trámites; la app le dice en voz alta cuál eligió.
+- **Elegir el trámite y ver sus documentos:** en el inicio la persona toca uno de los tres trámites. La siguiente pantalla muestra arriba el trámite elegido y abajo todos los documentos que necesita, con una explicación de cada uno y si ya lo tiene, y se los lee en voz alta.
 
 - **Foto del documento:** el usuario toma una foto con la cámara o elige una foto guardada. Gemini identifica qué documento es y si sirve (vigente, legible y, en el comprobante de domicilio, de máximo 6 meses).
 - **Lista que se va marcando y se comparte entre trámites:** cada foto válida marca un requisito como "Ya lo tiene". Si la persona ya fotografió su INE para la pensión, también aparece marcada en INAPAM. Cada trámite muestra además un recordatorio (teléfonos de contacto, originales y copias, fechas de registro).
@@ -99,7 +99,7 @@ lib/
 │   ├── gemini_service.dart   Llamadas a Gemini (revisar foto y responder preguntas)
 │   ├── tramite.dart          Estado en memoria: lista marcada y conversación
 │   └── voz_service.dart      Voz a texto y lectura en voz alta
-├── screens/                  Inicio, Tomar foto, Resultado y Preguntar
+├── screens/                  Inicio, Trámite (lista de documentos), Tomar foto, Resultado y Preguntar
 ├── theme/                    Colores y tamaños de letra
 └── widgets/                  Botones, tarjetas y botón de voz reutilizables
 test/widget_test.dart         Pruebas de la pantalla de inicio y de la lista
@@ -132,14 +132,13 @@ Esta guía está pensada para personas que usan la aplicación por primera vez.
 
 ### Primeros pasos y uso diario
 1. Abra la aplicación y toque el trámite que quiere hacer: **Pensión para adultos mayores**, **Credencial INAPAM** o **Pensión Mujeres Bienestar**.
-2. Toque **Tomar foto de mi documento** y ponga la hoja sobre una mesa, con buena luz.
-3. Lea qué documentos ya tiene, cuál le falta y qué hacer después.
-4. La app le lee el resultado en voz alta. Toque **Escuchar** para oírlo otra vez.
-5. Toque **Tomar foto de otro documento** para seguir completando su lista.
-6. Si tiene una duda, toque **Tengo una pregunta** o **Hablar con el asistente**, toque el micrófono y hable.
-7. Toque **Escuchar respuesta** para oírla otra vez.
-8. Toque **Ver mi lista** en el inicio para revisar su avance en cualquier momento.
-9. Confirme los requisitos en el módulo oficial antes de ir.
+2. Arriba verá el trámite que eligió y abajo **todos los documentos que necesita**, con una explicación de cada uno. La app se los lee en voz alta; toque **Escuchar la lista** para oírlos otra vez.
+3. Toque **Tomar foto de mi documento** y ponga la hoja sobre una mesa, con buena luz.
+4. La app le dice qué documento es, si sirve y qué hacer después, y lo marca como "Ya lo tiene".
+5. Toque **Tomar foto de otro documento** para seguir completando su lista, o **Volver a mis documentos** para ver su avance.
+6. Si tiene una duda, toque **Hablar con el asistente** o **Tengo una pregunta**, toque el micrófono y hable. Toque **Escuchar respuesta** para oírla otra vez.
+7. Toque **Cambiar de trámite** para elegir otro. Los documentos que ya revisó siguen marcados.
+8. Confirme los requisitos en el módulo oficial antes de ir.
 
 ---
 

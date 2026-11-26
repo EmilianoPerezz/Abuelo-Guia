@@ -80,11 +80,11 @@ class _ResultadoScreenState extends State<ResultadoScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SecondaryButton(
-                texto: 'Volver al inicio',
-                icono: Icons.home,
+                texto: 'Volver a mis documentos',
+                icono: Icons.checklist,
                 onPressed: () {
                   VozService.callar();
-                  Navigator.popUntil(context, (r) => r.isFirst);
+                  Navigator.popUntil(context, (r) => r.settings.name == 'tramite' || r.isFirst);
                 },
               ),
               const SizedBox(height: 24),
