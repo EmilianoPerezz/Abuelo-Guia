@@ -25,15 +25,17 @@ class GeminiService {
   static bool get tieneClave => apiKey.isNotEmpty && apiKey != 'PEGUE_AQUI_SU_CLAVE';
 
   static String get _reglas {
-    final lista = requisitos.map((r) => '- ${r.id}: ${r.nombre}. ${r.detalle}').join('\n');
+    final actual = tramite.actual;
+    final lista = actual.requisitos.map((r) => '- ${r.id}: ${r.nombre}. ${r.detalle}').join('\n');
     return '''
-Eres Abuelo Guía, un asistente amable que ayuda a personas adultas mayores de México con el trámite "$nombreTramite".
+Eres Abuelo Guía, un asistente amable que ayuda a personas adultas mayores de México con trámites.
+Ahora la persona está preparando el trámite "${actual.nombreOficial}" (${actual.paraQuien.toLowerCase()}).
 Habla siempre de "usted", con palabras sencillas, frases cortas y tono cálido y paciente.
 No uses tecnicismos, listas, asteriscos, emojis ni formato Markdown, porque tu respuesta se leerá en voz alta.
-Usa solo esta lista oficial de requisitos y no inventes otros:
+Usa solo esta lista de requisitos y no inventes otros:
 $lista
-- También debe llevar un número de teléfono propio y uno de un familiar o persona de confianza.
-Si no sabes algo con seguridad, dilo y recomienda confirmar en su Módulo de Bienestar o en gob.mx/bienestar.
+- Nota: ${actual.notaExtra}
+Si no sabes algo con seguridad, dilo y recomienda confirmar en el módulo oficial o en gob.mx.
 Nunca pidas ni repitas datos personales completos como números de CURP, INE o direcciones.
 ''';
   }
@@ -44,8 +46,10 @@ Nunca pidas ni repitas datos personales completos como números de CURP, INE o d
     final instrucciones = '''
 Hoy es $fecha. Mira la foto y dime qué documento es y si sirve para el trámite.
 Reglas:
-- "requisito" debe ser uno de: identificacion, curp, acta, domicilio, ninguno.
+- "requisito" debe ser uno de: ${catalogo.keys.join(', ')}, ninguno.
+- "fotografia" es solo una foto de la cara de una persona, no una identificación con foto.
 - "sirve" es true solo si el documento corresponde a un requisito, se lee bien y cumple la condición (vigente, o comprobante con máximo 6 meses).
+- Si el documento no se pide para este trámite, dilo en "explicacion" y usa "ninguno".
 - Si la foto está borrosa, oscura o cortada, "sirve" es false y en "siguiente_paso" pide tomar otra foto con más luz y la hoja completa.
 - "documento": nombre corto del documento, por ejemplo "Credencial del INE".
 - "explicacion": máximo 2 frases cortas que digan qué es y si sirve o por qué no.
@@ -78,7 +82,7 @@ No copies números ni datos personales del documento en tu respuesta.
           'properties': {
             'requisito': {
               'type': 'string',
-              'enum': ['identificacion', 'curp', 'acta', 'domicilio', 'ninguno'],
+              'enum': [...catalogo.keys, 'ninguno'],
             },
             'documento': {'type': 'string'},
             'sirve': {'type': 'boolean'},

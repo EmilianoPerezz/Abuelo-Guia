@@ -3,6 +3,7 @@ import 'package:material_ui/material_ui.dart';
 import '../data/requisitos.dart';
 import '../services/gemini_service.dart';
 import '../services/tramite.dart';
+import '../services/voz_service.dart';
 import '../theme/app_colors.dart';
 import '../widgets/big_button.dart';
 import '../widgets/info_card.dart';
@@ -24,13 +25,38 @@ class _InicioScreenState extends State<InicioScreen> {
     setState(() {});
   }
 
+  void _elegir(TipoTramite t) {
+    setState(() => tramite.elegir(t));
+    VozService.hablar('Eligió: ${t.titulo}. ${t.paraQuien}.');
+  }
+
+  Widget _tarjeta(TipoTramite t) {
+    final elegido = tramite.actual.id == t.id;
+    final listos = tramite.listosDe(t);
+    final total = t.documentos.length;
+    final avance = listos == 0 ? '' : ' Ya tiene $listos de $total documentos.';
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 14),
+      child: Semantics(
+        button: true,
+        selected: elegido,
+        child: GestureDetector(
+          onTap: () => _elegir(t),
+          child: InfoCard(
+            titulo: t.titulo,
+            texto: '${t.paraQuien}$avance',
+            icono: elegido ? Icons.check_circle : t.icono,
+            fondo: elegido ? AppColors.primario.withValues(alpha: 0.18) : Colors.white,
+            borde: elegido ? AppColors.borde : const Color(0xFF9FB4C4),
+          ),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    final listos = tramite.completos.length;
-    final total = requisitos.length;
-    final textoAvance = listos == 0
-        ? 'Revise qué documentos le faltan'
-        : 'Ya tiene $listos de $total documentos. Toque aquí para ver su lista.';
+    final listos = tramite.listosDe(tramite.actual);
 
     return Scaffold(
       body: SafeArea(
@@ -42,17 +68,10 @@ class _InicioScreenState extends State<InicioScreen> {
               Text('Hola, soy Abuelo Guía',
                   style: Theme.of(context).textTheme.headlineMedium),
               const SizedBox(height: 12),
-              Text('Le ayudo con su trámite, paso a paso.',
+              Text('¿Con qué trámite le ayudo? Toque uno.',
                   style: Theme.of(context).textTheme.bodyLarge),
-              const SizedBox(height: 24),
-              GestureDetector(
-                onTap: listos == 0 ? null : () => _ir(const ResultadoScreen()),
-                child: InfoCard(
-                  titulo: 'Pensión para adultos mayores',
-                  texto: textoAvance,
-                  icono: Icons.assignment_outlined,
-                ),
-              ),
+              const SizedBox(height: 20),
+              for (final t in tramites) _tarjeta(t),
               if (!GeminiService.tieneClave) ...[
                 const SizedBox(height: 16),
                 const InfoCard(
@@ -63,7 +82,7 @@ class _InicioScreenState extends State<InicioScreen> {
                   icono: Icons.key_off,
                 ),
               ],
-              const SizedBox(height: 48),
+              const SizedBox(height: 24),
               BigButton(
                 texto: 'Tomar foto de mi documento',
                 icono: Icons.camera_alt,
@@ -75,6 +94,14 @@ class _InicioScreenState extends State<InicioScreen> {
                 icono: Icons.mic,
                 onPressed: () => _ir(const PreguntarScreen()),
               ),
+              if (listos > 0) ...[
+                const SizedBox(height: 16),
+                SecondaryButton(
+                  texto: 'Ver mi lista',
+                  icono: Icons.checklist,
+                  onPressed: () => _ir(const ResultadoScreen()),
+                ),
+              ],
             ],
           ),
         ),

@@ -48,16 +48,26 @@ Adultos mayores con dificultades para entender trámites o usar aplicaciones con
 
 ## 3. Documentación funcional
 
-Funciones del MVP (trámite: Pensión para el Bienestar de las Personas Adultas Mayores):
+Trámites incluidos (versión 1.1):
+
+| Trámite | Para quién | Documentos que revisa la app |
+|---|---|---|
+| Pensión para el Bienestar de las Personas Adultas Mayores | 65 años o más | Identificación oficial vigente, CURP, acta de nacimiento y comprobante de domicilio (máximo 6 meses) |
+| Credencial INAPAM | 60 años o más | Los mismos cuatro, más una fotografía reciente |
+| Pensión Mujeres Bienestar | Mujeres de 60 a 64 años | Identificación oficial vigente, CURP, acta de nacimiento y comprobante de domicilio |
+
+Funciones:
+
+- **Elegir el trámite:** en la pantalla de inicio la persona toca uno de los tres trámites; la app le dice en voz alta cuál eligió.
 
 - **Foto del documento:** el usuario toma una foto con la cámara o elige una foto guardada. Gemini identifica qué documento es y si sirve (vigente, legible y, en el comprobante de domicilio, de máximo 6 meses).
-- **Lista que se va marcando:** cada foto válida marca un requisito como "Ya lo tiene". La lista oficial incluida en la app es: identificación oficial vigente, CURP, acta de nacimiento y comprobante de domicilio (máximo 6 meses). Además recuerda llevar los teléfonos de contacto.
+- **Lista que se va marcando y se comparte entre trámites:** cada foto válida marca un requisito como "Ya lo tiene". Si la persona ya fotografió su INE para la pensión, también aparece marcada en INAPAM. Cada trámite muestra además un recordatorio (teléfonos de contacto, originales y copias, fechas de registro).
 - **Explicación en lenguaje sencillo:** muestra el siguiente paso con frases cortas y letra grande, y lo lee en voz alta automáticamente.
 - **Asistente de voz:** el usuario toca el micrófono, hace su pregunta y escucha la respuesta. Gemini conoce qué documentos ya tiene y cuáles le faltan. También hay preguntas sugeridas y la opción "Prefiero escribir".
 
 La aplicación orienta, pero no valida documentos oficialmente.
 
-Fuente de los requisitos: convocatoria oficial de Programas para el Bienestar (gob.mx/bienestar).
+Fuentes de los requisitos: convocatorias de Programas para el Bienestar (gob.mx/bienestar) e INAPAM (gob.mx/inapam). La app siempre recomienda confirmarlos en el módulo, porque pueden cambiar.
 
 ---
 
@@ -84,7 +94,7 @@ Gemini interpreta la foto del documento, la compara con la lista de requisitos, 
 ```
 lib/
 ├── main.dart                 Arranque de la app y tema
-├── data/requisitos.dart      Lista oficial de requisitos del trámite
+├── data/requisitos.dart      Trámites incluidos y catálogo de documentos
 ├── services/
 │   ├── gemini_service.dart   Llamadas a Gemini (revisar foto y responder preguntas)
 │   ├── tramite.dart          Estado en memoria: lista marcada y conversación
@@ -121,14 +131,15 @@ Esta guía está pensada para personas que usan la aplicación por primera vez.
 4. Necesita conexión a internet.
 
 ### Primeros pasos y uso diario
-1. Abra la aplicación.
+1. Abra la aplicación y toque el trámite que quiere hacer: **Pensión para adultos mayores**, **Credencial INAPAM** o **Pensión Mujeres Bienestar**.
 2. Toque **Tomar foto de mi documento** y ponga la hoja sobre una mesa, con buena luz.
 3. Lea qué documentos ya tiene, cuál le falta y qué hacer después.
 4. La app le lee el resultado en voz alta. Toque **Escuchar** para oírlo otra vez.
 5. Toque **Tomar foto de otro documento** para seguir completando su lista.
 6. Si tiene una duda, toque **Tengo una pregunta** o **Hablar con el asistente**, toque el micrófono y hable.
 7. Toque **Escuchar respuesta** para oírla otra vez.
-8. Confirme los requisitos en su Módulo de Bienestar.
+8. Toque **Ver mi lista** en el inicio para revisar su avance en cualquier momento.
+9. Confirme los requisitos en el módulo oficial antes de ir.
 
 ---
 

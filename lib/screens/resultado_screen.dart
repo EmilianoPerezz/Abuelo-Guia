@@ -36,7 +36,7 @@ class _ResultadoScreenState extends State<ResultadoScreen> {
     }
     final faltan = tramite.faltantes;
     if (faltan.isEmpty) {
-      return 'Ya tiene todos sus documentos. Llévelos a su Módulo de Bienestar.';
+      return 'Ya tiene todos sus documentos. Llévelos al módulo para hacer su trámite.';
     }
     return 'Consiga su ${faltan.first.nombre.toLowerCase()} y tómele una foto.';
   }
@@ -90,6 +90,10 @@ class _ResultadoScreenState extends State<ResultadoScreen> {
               const SizedBox(height: 24),
               Text(mostrarFoto ? 'Esto es lo que encontré' : 'Sus documentos',
                   style: Theme.of(context).textTheme.headlineMedium),
+              if (!mostrarFoto) ...[
+                const SizedBox(height: 8),
+                Text(tramite.actual.titulo, style: Theme.of(context).textTheme.titleLarge),
+              ],
               const SizedBox(height: 16),
               if (mostrarFoto) ...[
                 InfoCard(
@@ -100,11 +104,11 @@ class _ResultadoScreenState extends State<ResultadoScreen> {
                   icono: revision.sirve ? Icons.thumb_up_alt_outlined : Icons.info_outline,
                 ),
                 const SizedBox(height: 24),
-                Text('Su lista para la pensión',
+                Text('Su lista para: ${tramite.actual.titulo}',
                     style: Theme.of(context).textTheme.titleLarge),
                 const SizedBox(height: 12),
               ],
-              for (final r in requisitos) ...[
+              for (final r in tramite.requisitos) ...[
                 ResultCard(texto: r.nombre, completo: tramite.tiene(r.id)),
                 const SizedBox(height: 12),
               ],
@@ -115,10 +119,10 @@ class _ResultadoScreenState extends State<ResultadoScreen> {
                 icono: Icons.directions_walk,
               ),
               const SizedBox(height: 12),
-              const InfoCard(
+              InfoCard(
                 titulo: 'No olvide',
-                texto: notaTelefonos,
-                icono: Icons.phone,
+                texto: tramite.actual.notaExtra,
+                icono: Icons.lightbulb_outline,
               ),
               const SizedBox(height: 16),
               Text(notaOficial, style: Theme.of(context).textTheme.bodyMedium),
